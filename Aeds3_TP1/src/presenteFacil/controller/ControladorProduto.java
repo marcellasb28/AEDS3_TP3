@@ -243,6 +243,7 @@ public class ControladorProduto {
                 System.out.println("\n-------- Alterar Dados do Produto --------");
                 System.out.println("(1) Alterar descricao");
                 System.out.println("(2) Alterar GTIN-13");
+                System.out.println("(3) Alterar nome");
                 System.out.println("(R) Retornar");
                 System.out.print("\nOpcao: ");
                 String op = scanner.nextLine().trim().toUpperCase();
@@ -291,6 +292,20 @@ public class ControladorProduto {
                         }
                         if (ok) System.out.println("\n-- GTIN-13 alterado com sucesso! --\n");
                         else System.out.println("\n-- Nao foi possivel alterar o GTIN-13. --\n");
+                        break;
+                    }
+                    case "3": {
+                        System.out.println("\nNome atual: " + produto.getNome());
+                        System.out.print("Novo nome: ");
+                        String novoNome = scanner.nextLine();
+                        if (!novoNome.trim().isEmpty()) {
+                            produto.setNome(novoNome);
+                            boolean ok = arqProdutos.update(produto);
+                            if (ok) System.out.println("\n-- Nome alterado com sucesso! --\n");
+                            else System.out.println("\n-- Nao foi possivel alterar o nome. --\n");
+                        } else {
+                            System.out.println("\n-- Nenhuma alteracao realizada. --\n");
+                        }
                         break;
                     }
                     case "R":

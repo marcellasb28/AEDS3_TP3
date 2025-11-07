@@ -398,4 +398,72 @@ public class ControladorListaDePresentes {
             System.err.println("\nErro ao reativar lista: " + e.getMessage() + "\n");
         }
     }
+    // Versao que exibe tambem os produtos de uma lista compartilhada
+    public void buscarListaPorCodigoComProdutos(Scanner scanner, Usuario usuarioLogado) {
+        if (usuarioLogado == null) {
+            System.err.println("\n-- Usuario nao autenticado. Faca login antes de buscar listas. --\n");
+            return;
+        }
+
+        System.out.println("-------- PresenteFacil 1.0 --------");
+        System.out.println("-----------------------------------");
+        System.out.println("> Inicio > Buscar Lista\n");
+
+        try {
+            System.out.print("\nDigite o codigo da lista: ");
+            String codigo = scanner.nextLine();
+            Lista lista = arqListas.readByCodigo(codigo);
+
+            if (lista == null || !lista.isAtiva()) {
+                System.out.println("\n-- Nenhuma lista ativa encontrada com esse codigo. --\n");
+                return;
+            }
+
+            ClearConsole.clearScreen();
+            System.out.println("-------- PresenteFacil 1.0 --------");
+            System.out.println("-----------------------------------");
+            System.out.println("> Inicio > " + lista.getNome() + "\n");
+
+            // Dono da lista
+            String nomeDono = "desconhecido";
+            try {
+                ArquivoUsuario arqUsuarios = new ArquivoUsuario();
+                Usuario dono = arqUsuarios.read(lista.getIdUsuario());
+                if (dono != null) nomeDono = dono.getNome();
+            } catch (Exception ignore) { }
+            System.out.println("Proprietario(a) da lista: " + nomeDono);
+
+            System.out.println("Nome: " + lista.getNome());
+            System.out.println("Descricao: " + lista.getDescricao());
+            System.out.println("Data de criacao: " + lista.getDataCriacao().format(formato));
+            System.out.println("Data limite: " + lista.getDataLimite().format(formato));
+            System.out.println("Codigo compartilhavel: " + lista.getCodigo());
+            System.out.println("Ativa: " + (lista.isAtiva() ? "Sim" : "Nao"));
+            System.out.println("------------------------------\n");
+
+            // Produtos contidos na lista
+            try {
+                ArquivoListaProduto arqLP = new ArquivoListaProduto();
+                ListaProduto[] itens = arqLP.readByListaId(lista.getId());
+                ArquivoProduto arqProd = new ArquivoProduto();
+                if (itens != null && itens.length > 0) {
+                    System.out.println("Produtos desta lista:");
+                    for (ListaProduto lp : itens) {
+                        Produto p = arqProd.read(lp.getIdProduto());
+                        if (p != null) {
+                            String st = p.isAtivo() ? "" : " (Inativo)";
+                            System.out.println("- " + p.getNome() + st + " (x" + lp.getQuantidade() + ")");
+                        }
+                    }
+                    System.out.println();
+                } else {
+                    System.out.println("Produtos desta lista: Nenhum produto cadastrado.\n");
+                }
+            } catch (Exception e) {
+                System.err.println("\nErro ao listar produtos da lista compartilhada: " + e.getMessage() + "\n");
+            }
+        } catch (Exception e) {
+            System.err.println("\nErro ao buscar lista: " + e.getMessage() + "\n");
+        }
+    }
 }

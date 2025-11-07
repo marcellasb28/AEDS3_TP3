@@ -178,6 +178,10 @@ public class ControladorListaProduto {
             if (produto == null) {
                 System.out.println("\n-- Nenhum produto encontrado com este GTIN-13. --\n");
             } else {
+                if (!produto.isAtivo()) {
+                    System.out.println("\n-- Produto inativo. Nao pode ser adicionado a lista. --\n");
+                    return;
+                }
                 System.out.println("\n-------- Detalhes do Produto --------");
                 System.out.println(produto);
                 System.out.println("-------------------------------------\n");
@@ -388,6 +392,10 @@ public class ControladorListaProduto {
             if (produto == null) {
                 System.out.println("\n-- Nenhum produto encontrado com este GTIN-13. --\n");
             } else {
+                if (!produto.isAtivo()) {
+                    System.out.println("\n-- Produto inativo. Nao pode ser adicionado a lista. --\n");
+                    return;
+                }
                 System.out.println("\n-------- Detalhes do Produto --------");
                 System.out.println(produto);
                 System.out.println("-------------------------------------\n");
@@ -447,6 +455,13 @@ public class ControladorListaProduto {
                 System.out.println("--- A quantidade não pode ser menor ou igual a zero! ---");
             }
             listaProduto.setQuantidade(quantidade);
+            try {
+                arqListaProduto.update(listaProduto);
+                System.out.println("\n-- Quantidade atualizada com sucesso! --\n");
+            } catch (Exception e) {
+                System.err.println("\nErro ao salvar a nova quantidade: " + e.getMessage() + "\n");
+            }
+            try { scanner.nextLine(); } catch (Exception ignore) {}
             continua = false;
         }
     }
@@ -454,8 +469,16 @@ public class ControladorListaProduto {
     public void mudarObservacoes(Scanner scanner, ListaProduto listaProduto){
         System.out.print("Digite aas novas observações: ");
         String observacoes = scanner.nextLine();
-        if(!observacoes.equals(" ")){
+        if(!observacoes.trim().isEmpty()){
             listaProduto.setObservacoes(observacoes);
+            try {
+                arqListaProduto.update(listaProduto);
+                System.out.println("\n-- Observacoes atualizadas com sucesso! --\n");
+            } catch (Exception e) {
+                System.err.println("\nErro ao salvar as observacoes: " + e.getMessage() + "\n");
+            }
+        } else {
+            System.out.println("\n-- Nenhuma alteracao realizada. --\n");
         }
     }
 

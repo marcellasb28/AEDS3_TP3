@@ -72,7 +72,7 @@ public class MenuUsuario {
                         break;
 
                     case 4:
-                        giftListController.buscarListaPorCodigo(scanner, usuarioLogado);
+                        giftListController.buscarListaPorCodigoComProdutos(scanner, usuarioLogado);
                         break;
 
                     case 5:
