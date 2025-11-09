@@ -7,6 +7,7 @@ import src.presenteFacil.model.*;
 import src.presenteFacil.utils.ClearConsole;
 
 
+
 public class MenuMinhasListas {
 
     private ControladorListaDePresentes giftListController;
@@ -51,7 +52,7 @@ public class MenuMinhasListas {
                     menuExibirListaDesativadas(scanner);
                     break;
                 default:
-                    if(isNumber(opcao)){ 
+                    if(IsNumber.isNumber(opcao)){ 
                         int indice = Integer.parseInt(opcao); 
                         System.out.println("\n[Selecionou a lista " + indice + "]\n"); 
 
@@ -97,15 +98,6 @@ public class MenuMinhasListas {
                 default:
                     System.out.println("\nOpição Invalida. Tente novamente.\n");
             }
-        }
-    }
-
-    public boolean isNumber(String str) {
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
         }
     }
 }

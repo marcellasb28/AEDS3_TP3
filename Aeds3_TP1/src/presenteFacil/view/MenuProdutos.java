@@ -25,9 +25,10 @@ public class MenuProdutos {
             System.out.println("-----------------------------------");
             System.out.println("> Início > Produtos\n");
             System.out.println("(1) Buscar produtos por GTIN");
-            System.out.println("(2) Listar todos os produtos");
-            System.out.println("(3) Cadastrar um novo produto");
-            System.out.println("(4) Reativar produto");
+            System.out.println("(2) Buscar produtos por nome");
+            System.out.println("(3) Listar todos os produtos");
+            System.out.println("(4) Cadastrar um novo produto");
+            System.out.println("(5) Reativar produto");
             System.out.println("\n(R) Retornar ao menu anterior");
             System.out.print("\nOpção: ");
 
@@ -39,12 +40,15 @@ public class MenuProdutos {
                     produtoController.buscarProdutoPorGtin(scanner, usuarioLogado);
                     break;
                 case "2":
-                    produtoController.listarTodosOsProdutos(scanner, usuarioLogado);
+                    produtoController.buscarProdutoPorNome(scanner, usuarioLogado);
                     break;
                 case "3":
-                    produtoController.cadastrarNovoProduto(scanner);
+                    produtoController.listarTodosOsProdutos(scanner, usuarioLogado);
                     break;
                 case "4":
+                    produtoController.cadastrarNovoProduto(scanner);
+                    break;
+                case "5":
                     produtoController.reativarProdutoPorGtin(scanner);
                     break;
                 case "R":

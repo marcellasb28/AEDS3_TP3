@@ -5,9 +5,17 @@ import src.presenteFacil.model.ArquivoProduto;
 import src.presenteFacil.model.Lista;
 import src.presenteFacil.model.Produto;
 import src.presenteFacil.model.Usuario;
+import src.presenteFacil.aeds3.ElementoLista;
+import src.presenteFacil.aeds3.Pesquisa;
+import src.presenteFacil.aeds3.ListaInvertida;
+import src.presenteFacil.model.IsNumber;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ControladorProduto {
@@ -15,10 +23,12 @@ public class ControladorProduto {
     private ArquivoProduto arqProdutos;
     private ArquivoListaProduto arqListaProduto;
     private Usuario usuario;
+    private ListaInvertida indiceInvertido;
 
     public ControladorProduto() throws Exception {
         this.arqProdutos = new ArquivoProduto();
         this.arqListaProduto = new ArquivoListaProduto();
+        this.indiceInvertido = new ListaInvertida(5, "dicionario.db", "blocos.db");
     }
 
     public void setUsuario(Usuario usuarioLogado){
@@ -49,7 +59,30 @@ public class ControladorProduto {
             String descricao = scanner.nextLine();
 
             Produto novoProduto = new Produto(gtin13, nome, descricao);
-            arqProdutos.create(novoProduto);
+            int id = arqProdutos.create(novoProduto);
+
+            String nomeNormalizado = nome.toLowerCase().trim();
+            String[] palavras = nomeNormalizado.split("\\s+");
+
+            List<String> palavrasFiltradas = new ArrayList<>();
+            Map<String, Integer> contagem = new HashMap<>();
+
+            for (String p : palavras) {
+
+                if (!Pesquisa.StopWords.contains(p) && !p.isBlank()) {
+                    palavrasFiltradas.add(p);
+                    contagem.put(p, contagem.getOrDefault(p, 0) + 1);
+                }
+            }
+
+            int totalPalavras = palavrasFiltradas.size();
+
+            for (String palavra : contagem.keySet()) {
+
+                int ocorrencias = contagem.get(palavra);
+                float frequencia = (float) ocorrencias / totalPalavras;
+                indiceInvertido.create(palavra, new ElementoLista(id, frequencia));
+            }
 
             System.out.println("\n-- Produto cadastrado com sucesso! --\n");
         } catch (Exception e) {
@@ -74,6 +107,109 @@ public class ControladorProduto {
                 System.out.println("\n-- Nenhum produto encontrado com este GTIN-13. --\n");
             } else {
                 exibirDetalhesProduto(scanner, produto);
+            }
+        } catch (Exception e) {
+            System.err.println("\nErro ao buscar produto: " + e.getMessage() + "\n");
+        }
+    }
+
+    public ArrayList<Produto> buscarProdutoPorNome(Scanner scanner, Usuario usuarioLogado) {
+
+        System.out.println("-------- PresenteFácil 1.0 --------");
+        System.out.println("-----------------------------------");
+        System.out.println("> Inicio > Produtos > Buscar por nome\n");
+
+        setUsuario(usuarioLogado);
+
+        try {
+            System.out.print("Digite o nome do produto: ");
+            String nome = scanner.nextLine();
+
+            String nomeNormalizado = nome.toLowerCase().trim();
+            String[] termos = nome.split(" ");
+
+            List<Produto> produtos = arqProdutos.listarTodos();
+            int total = produtos.size();
+
+            ArrayList<ElementoLista> resultados = new ArrayList<>();
+            HashMap<Integer, Float> mapaRelevancia = new HashMap<>();
+            ArrayList<Produto> produtosOrdenados = new ArrayList<>();
+
+            for (String termo : termos) {
+                ElementoLista[] lista = indiceInvertido.read(termo);
+                float idfPalavra = (float) (Math.log((float) total / lista.length) + 1);
+
+                if (lista.length > 0) {
+
+                    for (ElementoLista elemento : lista) {
+
+                        float tfidf = elemento.getFrequencia() * idfPalavra;
+                        mapaRelevancia.put(elemento.getId(), mapaRelevancia.getOrDefault(elemento.getId(), 0f) + tfidf);
+                    }
+                }
+            }
+
+            ArrayList<Integer> ids = new ArrayList<>(mapaRelevancia.keySet());
+
+            Collections.sort(ids, new Comparator<Integer>() {
+                public int compare(Integer id1, Integer id2) {
+                    return Float.compare(mapaRelevancia.get(id2), mapaRelevancia.get(id1));
+                }
+            });
+
+            for (int id : ids) {
+                produtosOrdenados.add(arqProdutos.read(id));
+            }
+               
+            System.out.println();
+
+            if(produtosOrdenados.isEmpty()) {
+                System.out.println("\n-- Nenhum produto encontrado com este nome. --\n");
+            }else{
+                mostrarProdutosBuscadosPorNome(scanner, produtosOrdenados);
+            }
+
+            return produtosOrdenados;
+
+        } catch (Exception e) {
+            System.err.println("\nErro ao buscar produto: " + e.getMessage() + "\n");
+        }
+        return null;
+    }
+
+    public void mostrarProdutosBuscadosPorNome(Scanner scanner, ArrayList<Produto> produtos) throws Exception {
+        try {
+            for (int i = 0; i < produtos.size(); i++) {
+                System.out.println("(" + (i + 1) + ") " + produtos.get(i).getNome());
+            }
+
+            boolean continua = true;
+            String opcao;
+            while (continua) {
+                System.out.println("\n(R) Retornar ao menu anterior");
+                System.out.println();
+                System.out.print("\nOpção: ");
+
+                opcao = scanner.nextLine().trim().toUpperCase();
+
+                switch (opcao) {
+                    case "R":
+                        System.out.println("\n-- Retornando ao menu anterior. --\n");
+                        continua = false;
+                        break;
+                    default:
+                        if (IsNumber.isNumber(opcao)) {
+                            int indice = Integer.parseInt(opcao);
+
+                            if (produtos != null && indice > 0 && indice <= produtos.size()) {
+                                mostrarDetalhesProduto(scanner, produtos.get(indice - 1));
+                            } else {
+                                System.out.println("\nOpção Inválida. Tente novamente.\n");
+                            }
+                        } else {
+                            System.out.println("\nOpção Inválida. Tente novamente.\n");
+                        }
+                }
             }
         } catch (Exception e) {
             System.err.println("\nErro ao buscar produto: " + e.getMessage() + "\n");
