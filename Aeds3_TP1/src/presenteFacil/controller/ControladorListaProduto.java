@@ -2,7 +2,6 @@ package src.presenteFacil.controller;
 
 import src.presenteFacil.model.*;
 import src.presenteFacil.utils.ClearConsole;
-import src.presenteFacil.aeds3.ElementoLista;
 import src.presenteFacil.controller.*;
 import src.presenteFacil.view.MenuMinhasListas;
 import src.presenteFacil.aeds3.*;
@@ -20,7 +19,7 @@ public class ControladorListaProduto {
         this.arqListaProduto = new ArquivoListaProduto();
         this.arqProduto = new ArquivoProduto();
         this.controladorProduto = new ControladorProduto();
-        this.indiceInvertido = new ListaInvertida(5, "dicionario.db", "blocos.db");
+        this.indiceInvertido = new ListaInvertida(5, "./data/ListaInvertida/dicionario.db", "./data/ListaInvertida/blocos.db");
     }
 
     public void setUsuario(Usuario usuarioLogado){

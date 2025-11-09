@@ -28,7 +28,7 @@ public class ControladorProduto {
     public ControladorProduto() throws Exception {
         this.arqProdutos = new ArquivoProduto();
         this.arqListaProduto = new ArquivoListaProduto();
-        this.indiceInvertido = new ListaInvertida(5, "dicionario.db", "blocos.db");
+        this.indiceInvertido = new ListaInvertida(5, "./data/ListaInvertida/dicionario.db", "./data/ListaInvertida/blocos.db");
     }
 
     public void setUsuario(Usuario usuarioLogado){
