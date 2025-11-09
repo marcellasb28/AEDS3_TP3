@@ -1,22 +1,8 @@
 package src.presenteFacil.controller;
 
-import src.presenteFacil.model.ArquivoListaProduto;
-import src.presenteFacil.model.ArquivoProduto;
-import src.presenteFacil.model.Lista;
-import src.presenteFacil.model.Produto;
-import src.presenteFacil.model.Usuario;
-import src.presenteFacil.aeds3.ElementoLista;
-import src.presenteFacil.aeds3.Pesquisa;
-import src.presenteFacil.aeds3.ListaInvertida;
-import src.presenteFacil.model.IsNumber;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import src.presenteFacil.model.*;
+import src.presenteFacil.aeds3.*;
+import java.util.*;
 
 public class ControladorProduto {
 
@@ -28,10 +14,11 @@ public class ControladorProduto {
     public ControladorProduto() throws Exception {
         this.arqProdutos = new ArquivoProduto();
         this.arqListaProduto = new ArquivoListaProduto();
-        this.indiceInvertido = new ListaInvertida(5, "./data/ListaInvertida/dicionario.db", "./data/ListaInvertida/blocos.db");
+        this.indiceInvertido = new ListaInvertida(5, "./data/ListaInvertida/dicionario.db",
+                "./data/ListaInvertida/blocos.db");
     }
 
-    public void setUsuario(Usuario usuarioLogado){
+    public void setUsuario(Usuario usuarioLogado) {
         this.usuario = usuarioLogado;
     }
 
@@ -131,7 +118,6 @@ public class ControladorProduto {
             List<Produto> produtos = arqProdutos.listarTodos();
             int total = produtos.size();
 
-            ArrayList<ElementoLista> resultados = new ArrayList<>();
             HashMap<Integer, Float> mapaRelevancia = new HashMap<>();
             ArrayList<Produto> produtosOrdenados = new ArrayList<>();
 
@@ -160,12 +146,12 @@ public class ControladorProduto {
             for (int id : ids) {
                 produtosOrdenados.add(arqProdutos.read(id));
             }
-               
+
             System.out.println();
 
-            if(produtosOrdenados.isEmpty()) {
+            if (produtosOrdenados.isEmpty()) {
                 System.out.println("\n-- Nenhum produto encontrado com este nome. --\n");
-            }else{
+            } else {
                 mostrarProdutosBuscadosPorNome(scanner, produtosOrdenados);
             }
 
@@ -257,10 +243,12 @@ public class ControladorProduto {
 
                 switch (opcao) {
                     case "P":
-                        if (paginaAtual < totalPaginas - 1) paginaAtual++;
+                        if (paginaAtual < totalPaginas - 1)
+                            paginaAtual++;
                         break;
                     case "A":
-                        if (paginaAtual > 0) paginaAtual--;
+                        if (paginaAtual > 0)
+                            paginaAtual--;
                         break;
                     case "R":
                         sair = true;
@@ -328,11 +316,27 @@ public class ControladorProduto {
     }
 
     private void exibirDetalhesProduto(Scanner scanner, Produto produto) throws Exception {
-        
+
         while (true) {
             System.out.println("\n-------- Detalhes do Produto --------");
             System.out.println(produto.toString());
             System.out.println("-------------------------------------\n");
+
+            System.out.println("Aparece nas minhas listas: ");
+
+            Lista[] minhasListas = arqListaProduto.getListaByProdutoIdAndUsuario(produto.getId(), usuario.getId());
+            if (minhasListas.length > 0) {
+                for (Lista lista : minhasListas) {
+                    System.out.println(" - " + lista.getNome());
+                }
+            } else {
+                System.out.println("Nenhuma lista encontrada.");
+            }
+
+            Lista[] todasListas = arqListaProduto.getListasByProdutoId(produto.getId());
+
+            System.out.println("\nAparece também em mais " + (todasListas.length - minhasListas.length) + " listas de outras pessoas.\n");
+
             System.out.println("(1) Alterar dados do produto");
             if (produto.isAtivo()) {
                 System.out.println("(2) Inativar o produto");
@@ -348,7 +352,8 @@ public class ControladorProduto {
                     alterarDadosProduto(scanner, produto);
                     // recarrega pelo ID atualizado (GTIN pode mudar)
                     produto = arqProdutos.read(produto.getID());
-                    if (produto == null) return;
+                    if (produto == null)
+                        return;
                     break;
                 case "2":
                     if (produto.isAtivo()) {
@@ -392,8 +397,10 @@ public class ControladorProduto {
                         if (!novaDescricao.trim().isEmpty()) {
                             produto.setDescricao(novaDescricao);
                             boolean ok = arqProdutos.update(produto);
-                            if (ok) System.out.println("\n-- Descricao alterada com sucesso! --\n");
-                            else System.out.println("\n-- Nao foi possivel alterar a descricao. --\n");
+                            if (ok)
+                                System.out.println("\n-- Descricao alterada com sucesso! --\n");
+                            else
+                                System.out.println("\n-- Nao foi possivel alterar a descricao. --\n");
                         } else {
                             System.out.println("\n-- Nenhuma alteracao realizada. --\n");
                         }
@@ -417,7 +424,8 @@ public class ControladorProduto {
                                 System.out.println("\n-- Ja existe um produto com esse GTIN-13. --\n");
                                 break;
                             }
-                        } catch (Exception ignored) { }
+                        } catch (Exception ignored) {
+                        }
 
                         produto.setGtin13(novoGtin);
                         boolean ok = false;
@@ -426,8 +434,10 @@ public class ControladorProduto {
                         } catch (Exception e) {
                             System.err.println("\nErro ao atualizar GTIN: " + e.getMessage() + "\n");
                         }
-                        if (ok) System.out.println("\n-- GTIN-13 alterado com sucesso! --\n");
-                        else System.out.println("\n-- Nao foi possivel alterar o GTIN-13. --\n");
+                        if (ok)
+                            System.out.println("\n-- GTIN-13 alterado com sucesso! --\n");
+                        else
+                            System.out.println("\n-- Nao foi possivel alterar o GTIN-13. --\n");
                         break;
                     }
                     case "3": {
@@ -437,8 +447,10 @@ public class ControladorProduto {
                         if (!novoNome.trim().isEmpty()) {
                             produto.setNome(novoNome);
                             boolean ok = arqProdutos.update(produto);
-                            if (ok) System.out.println("\n-- Nome alterado com sucesso! --\n");
-                            else System.out.println("\n-- Nao foi possivel alterar o nome. --\n");
+                            if (ok)
+                                System.out.println("\n-- Nome alterado com sucesso! --\n");
+                            else
+                                System.out.println("\n-- Nao foi possivel alterar o nome. --\n");
                         } else {
                             System.out.println("\n-- Nenhuma alteracao realizada. --\n");
                         }
