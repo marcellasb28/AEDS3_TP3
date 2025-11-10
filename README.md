@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="relatorios/figuras_readme/tp2/brasao.jpg" alt="Brasão PUC Minas" width="150">
+  <img src="figuras/brasao.jpg" alt="Brasão PUC Minas" width="150">
 </p>
 
 <h1 align="center">PONTIFÍCIA UNIVERSIDADE CATÓLICA DE MINAS GERAIS</h1>
