@@ -40,6 +40,7 @@ public class ControladorUsuario {
             String pergunta = scanner.nextLine();
             System.out.print("\nResposta secreta: ");
             String resposta = scanner.nextLine();
+            int hashResposta = resposta.hashCode();
             Usuario novoUsuario = new Usuario(nome, email, hashSenha, pergunta, resposta);
             arqUsuarios.create(novoUsuario);
 
@@ -151,7 +152,8 @@ public class ControladorUsuario {
         System.out.print("\nPergunta secreta: " + usuario.getPerguntaSecreta() + "\n");
         System.out.print("\nResposta secreta: ");
         String resp = scanner.nextLine();
-        if (!resp.equals(usuario.getRespostaSecreta())) { System.out.println("\n-- Resposta secreta incorreta. --\n"); return; }
+        int hashRespostaFornecida = resp.hashCode();
+        if (hashRespostaFornecida != usuario.getHashRespostaSecreta()) { System.out.println("\n-- Resposta secreta incorreta. --\n"); return; }
         usuario.setAtivo(true);
         if (arqUsuarios.update(usuario)) {
             Lista[] listas = arqListas.readByUsuario(usuario.getId());
@@ -296,7 +298,7 @@ public class ControladorUsuario {
                         ClearConsole.clearScreen();
 
                         if (r.trim().isEmpty()) { System.out.println("\n-- Nenhuma alteração realizada. --\n"); break; }
-                        usuarioLogado.setRespostaSecreta(r);
+                        usuarioLogado.setHashRespostaSecreta(r.hashCode());
                         salvarUsuarioLogado();
                         System.out.println("\n-- Resposta secreta atualizada! --\n");
                         break;

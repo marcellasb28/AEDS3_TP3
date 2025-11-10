@@ -9,7 +9,7 @@ public class Usuario implements Registro {
     private String email;
     private int HashSenha;
     private String PerguntaSecreta;
-    private String RespostaSecreta;
+    private int HashRespostaSecreta;
     private boolean ativo;
 
     public Usuario() {
@@ -18,7 +18,7 @@ public class Usuario implements Registro {
         this.email = "";
         this.HashSenha = -1;
         this.PerguntaSecreta = "";
-        this.RespostaSecreta = "";
+        this.HashRespostaSecreta = -1;
         this.ativo = false;
     }
 
@@ -28,7 +28,7 @@ public class Usuario implements Registro {
         this.email = email;
         this.HashSenha = senhaHash;
         this.PerguntaSecreta = pergunta;
-        this.RespostaSecreta = resposta;
+        this.HashRespostaSecreta = resposta.hashCode();
         this.ativo = true;
     }
 
@@ -47,7 +47,7 @@ public class Usuario implements Registro {
         dos.writeUTF(this.email);
         dos.writeInt(this.HashSenha);
         dos.writeUTF(this.PerguntaSecreta);
-        dos.writeUTF(this.RespostaSecreta);
+        dos.writeInt(this.HashRespostaSecreta);
         dos.writeBoolean(this.ativo);
         return baos.toByteArray();
     }
@@ -61,7 +61,7 @@ public class Usuario implements Registro {
         this.email = dis.readUTF();
         this.HashSenha = dis.readInt();
         this.PerguntaSecreta = dis.readUTF();
-        this.RespostaSecreta = dis.readUTF();
+        this.HashRespostaSecreta = dis.readInt();
         this.ativo = dis.readBoolean();
     }
 
@@ -78,7 +78,7 @@ public class Usuario implements Registro {
     public String getEmail() { return email; }
     public int getHashSenha() { return HashSenha; }
     public String getPerguntaSecreta() { return PerguntaSecreta; }
-    public String getRespostaSecreta() { return RespostaSecreta; }
+    public int getHashRespostaSecreta() { return HashRespostaSecreta; }
     public boolean isAtivo() { return ativo; }
 
     // Setters
@@ -87,6 +87,6 @@ public class Usuario implements Registro {
     public void setEmail(String email) { this.email = email; }
     public void setHashSenha(int hashSenha) { this.HashSenha = hashSenha; }
     public void setPerguntaSecreta(String pergunta) { this.PerguntaSecreta = pergunta; }
-    public void setRespostaSecreta(String resposta) { this.RespostaSecreta = resposta; }
+    public void setHashRespostaSecreta(int hashRespostaSecreta) { this.HashRespostaSecreta = hashRespostaSecreta; }
 }
 

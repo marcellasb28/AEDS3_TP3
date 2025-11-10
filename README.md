@@ -44,6 +44,7 @@ Este relatório descreve a terceira parte do Trabalho Prático da disciplina de 
     * [3.4 Compilação](#34-compilação)
     * [3.5 Sistema completo e funcional](#35-sistema-completo-e-funcional)
     * [3.6 Originalidade do trabalho](#36-originalidade-do-trabalho)
+    * [3.7 "Extra" - Resposta armazeanda em Hash](#36-)
 4. [CONCLUSÃO](#4-conclusão)
 5. [REFERÊNCIAS](#5-referencias)
 
