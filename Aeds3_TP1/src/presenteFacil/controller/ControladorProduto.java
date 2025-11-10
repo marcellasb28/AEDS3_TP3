@@ -10,12 +10,15 @@ public class ControladorProduto {
     private ArquivoListaProduto arqListaProduto;
     private Usuario usuario;
     private ListaInvertida indiceInvertido;
+    private Pesquisa motorPesquisa;
 
     public ControladorProduto() throws Exception {
         this.arqProdutos = new ArquivoProduto();
         this.arqListaProduto = new ArquivoListaProduto();
         this.indiceInvertido = new ListaInvertida(5, "./data/ListaInvertida/dicionario.db",
                 "./data/ListaInvertida/blocos.db");
+        //Inicializa o motor de pesquisa com o índice invertido
+        this.motorPesquisa = new Pesquisa(this.indiceInvertido);
     }
 
     public void setUsuario(Usuario usuarioLogado) {
@@ -102,66 +105,45 @@ public class ControladorProduto {
 
     public ArrayList<Produto> buscarProdutoPorNome(Scanner scanner, Usuario usuarioLogado) {
 
-        System.out.println("-------- PresenteFácil 1.0 --------");
-        System.out.println("-----------------------------------");
-        System.out.println("> Inicio > Produtos > Buscar por nome\n");
+    System.out.println("-------- PresenteFácil 1.0 --------");
+    System.out.println("-----------------------------------");
+    System.out.println("> Inicio > Produtos > Buscar por nome\n");
 
-        setUsuario(usuarioLogado);
+    setUsuario(usuarioLogado);
 
-        try {
-            System.out.print("Digite o nome do produto: ");
-            String nome = scanner.nextLine();
+    try {
+        System.out.print("Digite o nome do produto: ");
+        String nome = scanner.nextLine();
+        System.out.println();
+        
+        // 1. CHAMA O MOTOR DE PESQUISA (implementado em Pesquisa.java)
+        // Este método já retorna a lista de IDs e Scores ordenados por TFxIDF
+        List<ParIDScore> resultadosOrdenados = motorPesquisa.buscarProdutos(nome);
 
-            String nomeNormalizado = nome.toLowerCase().trim();
-            String[] termos = nome.split(" ");
+        ArrayList<Produto> produtosOrdenados = new ArrayList<>();
 
-            List<Produto> produtos = arqProdutos.listarTodos();
-            int total = produtos.size();
-
-            HashMap<Integer, Float> mapaRelevancia = new HashMap<>();
-            ArrayList<Produto> produtosOrdenados = new ArrayList<>();
-
-            for (String termo : termos) {
-                ElementoLista[] lista = indiceInvertido.read(termo);
-                float idfPalavra = (float) (Math.log((float) total / lista.length) + 1);
-
-                if (lista.length > 0) {
-
-                    for (ElementoLista elemento : lista) {
-
-                        float tfidf = elemento.getFrequencia() * idfPalavra;
-                        mapaRelevancia.put(elemento.getId(), mapaRelevancia.getOrDefault(elemento.getId(), 0f) + tfidf);
-                    }
-                }
+        // 2. CONVERTE A LISTA DE IDs EM OBJETOS Produto
+        for (ParIDScore par : resultadosOrdenados) {
+            Produto produto = arqProdutos.read(par.getId());
+            if (produto != null) {
+                produtosOrdenados.add(produto);
             }
-
-            ArrayList<Integer> ids = new ArrayList<>(mapaRelevancia.keySet());
-
-            Collections.sort(ids, new Comparator<Integer>() {
-                public int compare(Integer id1, Integer id2) {
-                    return Float.compare(mapaRelevancia.get(id2), mapaRelevancia.get(id1));
-                }
-            });
-
-            for (int id : ids) {
-                produtosOrdenados.add(arqProdutos.read(id));
-            }
-
-            System.out.println();
-
-            if (produtosOrdenados.isEmpty()) {
-                System.out.println("\n-- Nenhum produto encontrado com este nome. --\n");
-            } else {
-                mostrarProdutosBuscadosPorNome(scanner, produtosOrdenados);
-            }
-
-            return produtosOrdenados;
-
-        } catch (Exception e) {
-            System.err.println("\nErro ao buscar produto: " + e.getMessage() + "\n");
         }
-        return null;
+
+        if (produtosOrdenados.isEmpty()) {
+            System.out.println("\n-- Nenhum produto encontrado com este nome. --\n");
+        } else {
+            // Exibe o resultado (agora ordenado corretamente por TFxIDF)
+            mostrarProdutosBuscadosPorNome(scanner, produtosOrdenados);
+        }
+
+        return produtosOrdenados;
+
+    } catch (Exception e) {
+        System.err.println("\nErro ao buscar produto: " + e.getMessage() + "\n");
     }
+    return null;
+}
 
     public void mostrarProdutosBuscadosPorNome(Scanner scanner, ArrayList<Produto> produtos) throws Exception {
         try {
