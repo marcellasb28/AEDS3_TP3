@@ -21,7 +21,7 @@ public class MenuProdutos {
         boolean continua = true;
 
         while (continua) {
-            System.out.println("-------- PresenteFácil 1.0 --------");
+            System.out.println("-------- PresenteFácil 3.0 --------");
             System.out.println("-----------------------------------");
             System.out.println("> Início > Produtos\n");
             System.out.println("(1) Buscar produtos por GTIN");

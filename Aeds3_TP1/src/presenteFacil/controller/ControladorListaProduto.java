@@ -13,13 +13,12 @@ public class ControladorListaProduto {
     private ArquivoProduto arqProduto;
     private ControladorProduto controladorProduto;
     private Usuario usuarioLogado;
-    private ListaInvertida indiceInvertido;
 
     public ControladorListaProduto() throws Exception{
         this.arqListaProduto = new ArquivoListaProduto();
         this.arqProduto = new ArquivoProduto();
         this.controladorProduto = new ControladorProduto();
-        this.indiceInvertido = new ListaInvertida(5, "./data/ListaInvertida/dicionario.db", "./data/ListaInvertida/blocos.db");
+        
     }
 
     public void setUsuario(Usuario usuarioLogado){
@@ -33,7 +32,7 @@ public class ControladorListaProduto {
 
         try{
             while(continua) {
-                System.out.println("-------- PresenteFácil 1.0 --------"); 
+                System.out.println("-------- PresenteFácil 3.0 --------"); 
                 System.out.println("-----------------------------------"); 
                 System.out.println("> Início > Minhas Listas > " + lista.getNome() + " > Produtos \n");
 
@@ -53,7 +52,6 @@ public class ControladorListaProduto {
                         continua = false;
                         break;
                     case "A":
-                        System.out.println("\n-- vai ser acresentada. --\n");
                         acresentarProdutoLista(scanner, lista);
                         continua = false;
                         break;
@@ -83,7 +81,7 @@ public class ControladorListaProduto {
             boolean continua = true;
 
             while (continua) {
-                System.out.println("-------- PresenteFácil 1.0 --------"); 
+                System.out.println("-------- PresenteFácil 3.0 --------"); 
                 System.out.println("-----------------------------------"); 
                 System.out.println("> Início > Minhas Listas > " + lista.getNome() + " > Produtos > " + produto.getNome() +"\n");
 
@@ -155,7 +153,7 @@ public class ControladorListaProduto {
 
     public void buscarProdutorPorGtin(Scanner scanner, Lista lista) throws Exception {
         try {
-            System.out.println("-------- PresenteFácil 1.0 --------"); 
+            System.out.println("-------- PresenteFácil 3.0 --------"); 
             System.out.println("-----------------------------------"); 
             System.out.println("> Início > Minhas Listas > " + lista.getNome() + " > Produtos > Acrescentar produto > Buscar por GTIN \n");
 
@@ -280,105 +278,84 @@ public class ControladorListaProduto {
         }
     }
 
-    public void buscarProdutoPorNome(Scanner scanner, Lista lista){
-        try {
-            System.out.println("-------- PresenteFácil 1.0 --------"); 
-            System.out.println("-----------------------------------"); 
-            System.out.println("> Início > Minhas Listas > " + lista.getNome() + " > Produtos > Acrescentar produto > Buscar por Nome \n");
+    public void buscarProdutoPorNome(Scanner scanner, Lista lista){ 
+    
+    // 1. Definição do cabeçalho (Mantido)
+    System.out.println("-------- PresenteFácil 3.0 --------"); 
+    System.out.println("-----------------------------------"); 
+    System.out.println("> Início > Minhas Listas > " + lista.getNome() + " > Produtos > Acrescentar produto > Buscar por Nome \n");
 
-            System.out.print("Digite o nome do produto: ");
-            String nome = scanner.nextLine();
+    try {
+        // O ControladorProduto.buscarProdutoPorNome retorna o ArrayList<Produto> JÁ ORDENADO
+        // Ele também lida com o input do nome e a exibição inicial dos resultados.
+        ArrayList<Produto> produtosOrdenados = controladorProduto.buscarProdutoPorNome(scanner, usuarioLogado);
 
-            String nomeNormalizado = nome.toLowerCase().trim();
-            String[] termos = nome.split(" ");
+        if (produtosOrdenados == null || produtosOrdenados.isEmpty()) {
+            // A mensagem de "não encontrado" já é dada pelo controladorProduto, aqui apenas retorna
+            return; 
+        }
 
-            List<Produto> produtosLista = arqProduto.listarTodos();
-            int total = produtosLista.size();
+        // --- LÓGICA DE INTERAÇÃO APÓS A BUSCA ---
+        // A lista 'produtosOrdenados' JÁ ESTÁ ORDENADA CORRETAMENTE POR TFxIDF.
+        
+        // Exibe os produtos (já ordenados)
+        for (int i = 0; i < produtosOrdenados.size(); i++) {
+             System.out.println("(" + (i + 1) + ") " + produtosOrdenados.get(i).getNome());
+        }
 
-            ArrayList<ElementoLista> resultados = new ArrayList<>();
-            HashMap<Integer, Float> mapaRelevancia = new HashMap<>();
-            ArrayList<Produto> produtosOrdenados = new ArrayList<>();
-
-            for (String termo : termos) {
-                ElementoLista[] elementoLista = indiceInvertido.read(termo);
-                float idfPalavra = (float) (Math.log((float) total / elementoLista.length) + 1);
-
-                if (elementoLista.length > 0) {
-
-                    for (ElementoLista elemento : elementoLista) {
-
-                        float tfidf = elemento.getFrequencia() * idfPalavra;
-                        mapaRelevancia.put(elemento.getId(), mapaRelevancia.getOrDefault(elemento.getId(), 0f) + tfidf);
-                    }
-                }
-            
-            }
-
-            ArrayList<Integer> ids = new ArrayList<>(mapaRelevancia.keySet());
-
-            Collections.sort(ids, new Comparator<Integer>() {
-                public int compare(Integer id1, Integer id2) {
-                    return Float.compare(mapaRelevancia.get(id2), mapaRelevancia.get(id1));
-                }
-            });
-
-            for (int id : ids) {
-                produtosOrdenados.add(arqProduto.read(id));
-            }
-             
+        boolean continua = true;
+        String opcao;
+        while (continua) {
+            System.out.println("\n(R) Retornar ao menu anterior");
             System.out.println();
+            System.out.print("\nOpção: ");
 
-            for (int i = 0; i < produtosOrdenados.size(); i++) {
-                System.out.println("(" + (i + 1) + ") " + produtosOrdenados.get(i).getNome());
-            }
+            opcao = scanner.nextLine().trim().toUpperCase();
 
-            boolean continua = true;
-            String opcao;
-            while (continua) {
-                System.out.println("\n(R) Retornar ao menu anterior");
-                System.out.println();
-                System.out.print("\nOpção: ");
+            switch (opcao) {
+                case "R":
+                    System.out.println("\n-- Retornando ao menu anterior. --\n");
+                    continua = false;
+                    break;
+                default:
+                    if (IsNumber.isNumber(opcao)) {
+                        int indice = Integer.parseInt(opcao);
+                        Produto produtoSelecionado = (indice > 0 && indice <= produtosOrdenados.size()) ? 
+                                                     produtosOrdenados.get(indice - 1) : null;
 
-                opcao = scanner.nextLine().trim().toUpperCase();
-
-                switch (opcao) {
-                    case "R":
-                        System.out.println("\n-- Retornando ao menu anterior. --\n");
-                        continua = false;
-                        break;
-                    default:
-                        if (IsNumber.isNumber(opcao)) {
-                            int indice = Integer.parseInt(opcao);
-
-                            if (produtosOrdenados != null && indice > 0 && indice <= produtosOrdenados.size()) {
-                                boolean estaNaLista = false;
-                                Produto[] produtos = arqListaProduto.getProdutosByListaId(lista.getId());
-                                
-                                for(int i = 0; i < produtos.length; i++){
-                                    if(produtosOrdenados.get(indice - 1).getGtin13().equals(produtos[i].getGtin13())){
-                                        estaNaLista = true;
-                                        break;
-                                    }
-                                }
-
-                                if(estaNaLista){
-                                    System.out.println("\n--- Projduto já está cadastrado na lista! ---\n");
-                                    return;
-                                }else{
-                                    acrescentarPorBuscaPorNome(scanner, lista, produtosOrdenados.get(indice - 1));
-                                }                              
+                        if (produtoSelecionado != null) {
+                            // Verifica se o produto já está na lista (Lógica movida para uma função)
+                            if (produtoJaExisteNaLista(lista, produtoSelecionado)) {
+                                System.out.println("\n--- Produto já está cadastrado na lista! ---\n");
+                                return; // Finaliza
                             } else {
-                                System.out.println("\nOpção Inválida. Tente novamente.\n");
+                                // Chama o método que lida com a quantidade/observações e adiciona
+                                acrescentarPorBuscaPorNome(scanner, lista, produtoSelecionado);
+                                return; // Finaliza após adicionar ou cancelar
                             }
                         } else {
                             System.out.println("\nOpção Inválida. Tente novamente.\n");
                         }
-                }
+                    } else {
+                        System.out.println("\nOpção Inválida. Tente novamente.\n");
+                    }
             }
-        } catch (Exception e) {
-            System.err.println("\nErro ao buscar produto: " + e.getMessage() + "\n");
+        }
+    } catch (Exception e) {
+        System.err.println("\nErro ao buscar produto: " + e.getMessage() + "\n");
+    }
+}
+
+// --- NOVO MÉTODO DE VERIFICAÇÃO ---
+public boolean produtoJaExisteNaLista(Lista lista, Produto produto) throws Exception {
+    Produto[] produtosNaLista = arqListaProduto.getProdutosByListaId(lista.getId());
+    for(Produto p : produtosNaLista){
+        if(p.getId() == produto.getId()){
+            return true;
         }
     }
+    return false;
+}
 
     public void acrescentarPorBuscaPorNome(Scanner scanner, Lista lista, Produto produto){
         try {
@@ -482,7 +459,7 @@ public class ControladorListaProduto {
             produtos.sort(Comparator.comparing(Produto::getNome, String.CASE_INSENSITIVE_ORDER));
 
             while (!sair){
-                System.out.println("-------- PresenteFácil 1.0 --------"); 
+                System.out.println("-------- PresenteFácil 3.0 --------"); 
                 System.out.println("-----------------------------------"); 
                 System.out.println("> Início > Minhas Listas > " + lista.getNome() + " > Protudos > Acrescentar produto > Listagem \n");
 

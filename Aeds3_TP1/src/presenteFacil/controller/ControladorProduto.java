@@ -26,7 +26,7 @@ public class ControladorProduto {
     }
 
     public void cadastrarNovoProduto(Scanner scanner) {
-        System.out.println("-------- PresenteFácil 1.0 --------");
+        System.out.println("-------- PresenteFácil 3.0 --------");
         System.out.println("-----------------------------------");
         System.out.println("> Inicio > Produtos > Cadastrar\n");
         try {
@@ -51,28 +51,32 @@ public class ControladorProduto {
             Produto novoProduto = new Produto(gtin13, nome, descricao);
             int id = arqProdutos.create(novoProduto);
 
-            String nomeNormalizado = nome.toLowerCase().trim();
-            String[] palavras = nomeNormalizado.split("\\s+");
-
-            List<String> palavrasFiltradas = new ArrayList<>();
+            // --- BLOCO CORRIGIDO: Usando Pesquisa para processar o nome ---
+            // 1. Usa o método unificado para tokenizar, remover acentos, e filtrar stop words.
+            List<String> termosProcessados = Pesquisa.tokenizarEFiltrar(nome);
+            
             Map<String, Integer> contagem = new HashMap<>();
 
-            for (String p : palavras) {
+            // 2. Conta a frequência (TF) dos termos válidos
+            for (String termo : termosProcessados) {
+                contagem.put(termo, contagem.getOrDefault(termo, 0) + 1);
+            }
 
-                if (!Pesquisa.StopWords.contains(p) && !p.isBlank()) {
-                    palavrasFiltradas.add(p);
-                    contagem.put(p, contagem.getOrDefault(p, 0) + 1);
+            int totalPalavras = termosProcessados.size();
+            
+            // 3. Cria a entrada no índice invertido
+            if (totalPalavras > 0) {
+                for (String palavra : contagem.keySet()) {
+                    int ocorrencias = contagem.get(palavra);
+                    float frequencia = (float) ocorrencias / totalPalavras;
+                    try {
+                        indiceInvertido.create(palavra, new ElementoLista(id, frequencia));
+                    } catch (Exception e) {
+                        System.err.println("Erro ao indexar termo '" + palavra + "': " + e.getMessage());
+                    }
                 }
             }
-
-            int totalPalavras = palavrasFiltradas.size();
-
-            for (String palavra : contagem.keySet()) {
-
-                int ocorrencias = contagem.get(palavra);
-                float frequencia = (float) ocorrencias / totalPalavras;
-                indiceInvertido.create(palavra, new ElementoLista(id, frequencia));
-            }
+            // --- FIM DO BLOCO CORRIGIDO ---
 
             System.out.println("\n-- Produto cadastrado com sucesso! --\n");
         } catch (Exception e) {
@@ -82,7 +86,7 @@ public class ControladorProduto {
 
     public void buscarProdutoPorGtin(Scanner scanner, Usuario usuarioLogado) {
 
-        System.out.println("-------- PresenteFácil 1.0 --------");
+        System.out.println("-------- PresenteFácil 3.0 --------");
         System.out.println("-----------------------------------");
         System.out.println("> Inicio > Produtos > Buscar por GTIN\n");
 
@@ -105,7 +109,7 @@ public class ControladorProduto {
 
     public ArrayList<Produto> buscarProdutoPorNome(Scanner scanner, Usuario usuarioLogado) {
 
-    System.out.println("-------- PresenteFácil 1.0 --------");
+    System.out.println("-------- PresenteFácil 3.0 --------");
     System.out.println("-----------------------------------");
     System.out.println("> Inicio > Produtos > Buscar por nome\n");
 
@@ -200,7 +204,7 @@ public class ControladorProduto {
             boolean sair = false;
 
             while (!sair) {
-                System.out.println("-------- PresenteFácil 1.0 --------");
+                System.out.println("-------- PresenteFácil 3.0 --------");
                 System.out.println("-----------------------------------");
                 System.out.println("> Início > Produtos > Listagem\n");
 
@@ -258,7 +262,7 @@ public class ControladorProduto {
 
     // Reativar produto diretamente via GTIN
     public void reativarProdutoPorGtin(Scanner scanner) {
-        System.out.println("-------- PresenteFacil 1.0 --------");
+        System.out.println("-------- PresenteFacil 3.0 --------");
         System.out.println("-----------------------------------");
         System.out.println("> Inicio > Produtos > Reativar\n");
 

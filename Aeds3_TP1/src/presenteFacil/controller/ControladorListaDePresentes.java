@@ -29,7 +29,7 @@ public class ControladorListaDePresentes {
 
     public void criarNovaLista(Scanner scanner, Usuario usuario) {   
 
-        System.out.println("-------- PresenteFácil 1.0 --------"); 
+        System.out.println("-------- PresenteFácil 3.0 --------"); 
         System.out.println("-----------------------------------"); 
         System.out.println("> Início > Minhas Listas > Nova Lista\n");
         try{
@@ -74,7 +74,7 @@ public class ControladorListaDePresentes {
 
     public Lista[] mostrarMinhasListas(Usuario usuario) throws Exception{
         try{
-            System.out.println("-------- PresenteFácil 2.0 --------"); 
+            System.out.println("-------- PresenteFácil 3.0 --------"); 
             System.out.println("-----------------------------------"); 
             System.out.println("> Início > Minhas Listas\n");
             System.out.println("\nLISTAS");
@@ -109,7 +109,7 @@ public class ControladorListaDePresentes {
 
     public void mostrarListasDesativadas(Usuario usuario) {
 
-        System.out.println("-------- PresenteFácil 1.0 --------"); 
+        System.out.println("-------- PresenteFácil 3.0 --------"); 
         System.out.println("-----------------------------------"); 
         System.out.println("> Início > Minhas Listas > Listas Desativadas\n");
         
@@ -149,7 +149,7 @@ public class ControladorListaDePresentes {
         }
         this.usuarioLogado = usuarioLogado; // garante o campo preenchido
 
-        System.out.println("-------- PresenteFácil 1.0 --------"); 
+        System.out.println("-------- PresenteFácil 3.0 --------"); 
         System.out.println("-----------------------------------"); 
         System.out.println("> Início > Buscar Lista\n");
 
@@ -163,7 +163,7 @@ public class ControladorListaDePresentes {
             } else {
                 System.out.println("\n-- Lista encontrada! --");
                 ClearConsole.clearScreen();
-                System.out.println("-------- PresenteFácil 2.0 --------"); 
+                System.out.println("-------- PresenteFácil 3.0 --------"); 
                 System.out.println("-----------------------------------"); 
                 System.out.println("> Início > " + lista.getNome() + "\n");
                 System.out.println("Proprietário(a) da lista: " + usuarioLogado.getNome());
@@ -190,7 +190,7 @@ public class ControladorListaDePresentes {
             setUsuario(usuarioLogado);
             
             ClearConsole.clearScreen();
-            System.out.println("-------- PresenteFácil 2.0 --------"); 
+            System.out.println("-------- PresenteFácil 3.0 --------"); 
             System.out.println("-----------------------------------"); 
             System.out.println("> Início > Minhas Listas > " + lista.getNome() + "\n");
             System.out.println("Nome: " + lista.getNome());
@@ -256,7 +256,7 @@ public class ControladorListaDePresentes {
     }
 
     public void alterarDadosLista(Scanner scanner, Lista lista) {
-        System.out.println("-------- PresenteFácil 2.0 --------"); 
+        System.out.println("-------- PresenteFácil 3.0 --------"); 
         System.out.println("-----------------------------------"); 
         System.out.println("> Início > Minhas Listas > " + lista.getNome() + " > Alterar Dados da Lista\n");
         System.out.println("\n----- Alterar Dados da Lista ------");
@@ -313,7 +313,7 @@ public class ControladorListaDePresentes {
     }
 
     public boolean deletarLista(Scanner scanner, int idLista, String nome) throws Exception {
-        System.out.println("-------- PresenteFácil 2.0 --------"); 
+        System.out.println("-------- PresenteFácil 3.0 --------"); 
         System.out.println("-----------------------------------"); 
         System.out.println("> Início > Minhas Listas > " + nome + " > Deletar Lista\n");
         System.out.println("\n-------- Deletar Lista ----------");
@@ -340,7 +340,7 @@ public class ControladorListaDePresentes {
     }
 
     public boolean desativarLista(Scanner scanner, int idLista, String nome) throws Exception {
-        System.out.println("-------- PresenteFácil 2.0 --------"); 
+        System.out.println("-------- PresenteFácil 3.0 --------"); 
         System.out.println("-----------------------------------"); 
         System.out.println("> Início > Minhas Listas > " + nome + " > Desativar Lista\n");
         System.out.println("\n-------- Desativar Lista ----------");
@@ -367,7 +367,7 @@ public class ControladorListaDePresentes {
     }
 
     public void reativarLista(Scanner scanner) {
-        System.out.println("-------- PresenteFácil 2.0 --------"); 
+        System.out.println("-------- PresenteFácil 3.0 --------"); 
         System.out.println("-----------------------------------"); 
         System.out.println("> Início > Minhas Listas > Reativar Lista\n");
         try {
@@ -411,7 +411,7 @@ public class ControladorListaDePresentes {
             return;
         }
 
-        System.out.println("-------- PresenteFacil 1.0 --------");
+        System.out.println("-------- PresenteFacil 3.0 --------");
         System.out.println("-----------------------------------");
         System.out.println("> Inicio > Buscar Lista\n");
 
@@ -426,7 +426,7 @@ public class ControladorListaDePresentes {
             }
 
             ClearConsole.clearScreen();
-            System.out.println("-------- PresenteFacil 1.0 --------");
+            System.out.println("-------- PresenteFacil 3.0 --------");
             System.out.println("-----------------------------------");
             System.out.println("> Inicio > " + lista.getNome() + "\n");
 

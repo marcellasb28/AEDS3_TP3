@@ -75,7 +75,7 @@ public class MenuMinhasListas {
         boolean continua = true;
 
         while (continua) {
-            System.out.println("-------- PresenteFácil 2.0 --------"); 
+            System.out.println("-------- PresenteFácil 3.0 --------"); 
             System.out.println("-----------------------------------"); 
             System.out.println("> Início > Minhas Listas\n"); 
 
