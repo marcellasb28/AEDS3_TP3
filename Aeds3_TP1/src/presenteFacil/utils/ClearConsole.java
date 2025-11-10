@@ -22,4 +22,21 @@ public class ClearConsole {
         }
     }
 
+    public static void delayAndClear() {
+        
+    try {
+        // Aguarda 1 segundo (1000 milissegundo)
+        Thread.sleep(1000);
+
+        // Limpa o terminal (Windows, Linux e macOS)
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+
+    } catch (InterruptedException e) {
+        // Caso o delay seja interrompido
+        System.err.println("Delay interrompido: " + e.getMessage());
+    }
+}
+
+
 }

@@ -1,7 +1,6 @@
 package src.presenteFacil.controller;
 
 import java.util.Scanner;
-
 import src.presenteFacil.model.*;
 import src.presenteFacil.utils.ClearConsole;
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import src.presenteFacil.aeds3.*;
 
 public class ArquivoLista extends Arquivo<Lista> {
+
     HashExtensivel<ParIDEndereco> indiceDiretoID;
     HashExtensivel<ParCodigoID> indiceDiretoCodigo;
     ArvoreBMais<ParIntInt> usuarioLista;
@@ -94,6 +95,7 @@ public class ArquivoLista extends Arquivo<Lista> {
     }
 
     public boolean disableList(int idLista) throws Exception {
+
         Lista lista = super.read(idLista);
         
         if(lista == null) return false;
@@ -113,6 +115,7 @@ public class ArquivoLista extends Arquivo<Lista> {
 
     @Override
     public boolean delete(int idLista) throws Exception {
+        
         Lista lista = super.read(idLista);
         
         if(lista == null) return false;

@@ -1,7 +1,6 @@
 package src.presenteFacil.view;
 
 import java.util.Scanner;
-
 import src.presenteFacil.controller.ControladorListaDePresentes;
 import src.presenteFacil.model.*;
 import src.presenteFacil.utils.ClearConsole;
@@ -54,6 +53,9 @@ public class MenuMinhasListas {
                 default:
                     if(IsNumber.isNumber(opcao)){ 
                         int indice = Integer.parseInt(opcao); 
+
+                        ClearConsole.clearScreen();
+
                         System.out.println("\n[Selecionou a lista " + indice + "]\n"); 
 
                         if(listas != null && indice > 0 && indice <= listas.length){ 
@@ -73,7 +75,7 @@ public class MenuMinhasListas {
         boolean continua = true;
 
         while (continua) {
-            System.out.println("-------- PresenteFácil 1.0 --------"); 
+            System.out.println("-------- PresenteFácil 2.0 --------"); 
             System.out.println("-----------------------------------"); 
             System.out.println("> Início > Minhas Listas\n"); 
 

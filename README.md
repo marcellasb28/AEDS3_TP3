@@ -1,42 +1,41 @@
 <p align="center">
-  <img src="figuras/brasao.jpg" alt="Brasão PUC Minas" width="150"/>
+  <img src="relatorios/figuras_readme/tp2/brasao.jpg" alt="Brasão PUC Minas" width="150">
 </p>
 
-<div align="center">
-  
-# PONTIFÍCIA UNIVERSIDADE CATÓLICA DE MINAS GERAIS
-### Instituto de Ciências Exatas e de Informática
-### Curso de Ciência da Computação
----
-</div>
+<h1 align="center">PONTIFÍCIA UNIVERSIDADE CATÓLICA DE MINAS GERAIS</h1>
+<h3 align="center">Instituto de Ciências Exatas e de Informática</h3>
+<h3 align="center">Curso de Ciência da Computação</h3>
 
-# Relatório Trabalho Prático 03
+<br>
+
+# Relatório Trabalho Prático 02
+
 ## Algoritmos e Estruturas de Dados III
 
-Este relatório descreve a terceira parte do Trabalho Prático da disciplina de AEDS III.
+Este relatório descreve a segunda parte do Trabalho Prático da disciplina de AEDS III.
 
 <br>
 
 ### Autores
 
-* **Bernardo Ladeira Kartabil**
-    * `bernardo.kartabil@sga.pucminas.br`
-* **Marcella Santos Belchior**
-    * `marcella.belchior@sga.pucminas.br`
-* **Thiago Henrique Gomes Feliciano**
-    * `1543790@sga.pucminas.br`
-* **Yasmin Torres Moreira dos Santos**
-    * `yasmin.santos.1484596@sga.pucminas.br`
+  * **Bernardo Ladeira Kartabil**
+       \* `bernardo.kartabil@sga.pucminas.br`
+  * **Marcella Santos Belchior**
+      \* `marcella.belchior@sga.pucminas.br`
+  * **Thiago Henrique Gomes Feliciano**
+      \* `1543790@sga.pucminas.br`
+  * **Yasmin Torres Moreira dos Santos**
+      \* `yasmin.santos.1484596@sga.pucminas.br`
 
----
+-----
 
 ### **Resumo**
 
- 
+Este trabalho é a segunda fase de evolução do "PresenteFácil", um sistema de gerenciamento de listas de presentes em Java, desenvolvido para a disciplina de Algoritmos e Estruturas de Dados III.
 
-**Palavras-chave:** 
+O foco principal foi implementar um relacionamento N:N  entre as entidades Lista e Produto. Para isso, o sistema agora oferece operações CRUD completas para Produtos e para a nova entidade de associação, ListaProduto.
 
----
+Para garantir um acesso eficiente aos dados, utilizamos estruturas de indexação externas:
 
 ## Sumário
 1.  [INTRODUÇÃO](#1-introdução)
@@ -52,5 +51,5 @@ Este relatório descreve a terceira parte do Trabalho Prático da disciplina de 
 4.  [CONCLUSÃO](#4-conclusão)
 5.  [REFERÊNCIAS](#referências)
 
----
+Árvore B+: Empregada para materializar e otimizar o relacionamento N:N, acelerando consultas cruciais como "quais produtos estão nesta lista?" e "em quais listas este produto aparece?".
 

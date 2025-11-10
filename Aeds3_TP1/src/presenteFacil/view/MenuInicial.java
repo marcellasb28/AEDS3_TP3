@@ -21,7 +21,7 @@ public class MenuInicial {
         while (true) {
 
             System.out.println("\n");
-            System.out.println("-------- PresenteFácil 1.0 --------");
+            System.out.println("-------- PresenteFácil 2.0 --------");
             System.out.println("-----------------------------------");
             System.out.println("\n(1) Login");
             System.out.println("(2) Novo usuário");
