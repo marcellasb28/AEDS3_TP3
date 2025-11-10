@@ -64,9 +64,20 @@ O objetivo principal deste TP03 é implementar uma **busca por palavras-chave** 
 
 O desenvolvimento foi centrado na integração da `ListaInvertida` com o `ControladorProduto` e o `ControladorListaProduto`. A classe `Pesquisa.java` foi criada para centralizar a lógica de busca, o pré-processamento de texto (tokenização, remoção de stop words, normalização de minúsculas e acentos) e o cálculo de relevância $\text{TF} \times \text{IDF}$.
 
-![Trecho da classe : ListaInvertida.java](figuras/brasao.jpg)
+</br>
 
-![Trecho da classe : Pesquisa.java](figuras/brasao.jpg)
+<div style="display: flex; justify-content: center; gap: 20px;">
+  <div style="text-align: center;">
+    <img src="figuras/listainvertida01.png"  width="700">
+    <em>Figura 1: Trecho da classe : ListaInvertida.java.</em>
+  </div>
+  <div style="text-align: center;">
+    <img src="figuras/pesquisa02.png"  width="700">
+    <em>Figura 2: Trecho da classe : Pesquisa.java.</em>
+  </div>
+</div>
+
+</br>
 
 ### 2.1 Estruturas de Dados e Persistência
 
@@ -88,15 +99,39 @@ Ao cadastrar ou atualizar um produto, seu nome é processado pela classe `Pesqui
 
 **Sim.** No menu principal de "Produtos", há uma opção para "Buscar por Nome". Esta funcionalidade utiliza o motor de busca $\text{TF} \times \text{IDF}$ (implementado na classe `Pesquisa.java`) e exibe os resultados ordenados por relevância.
 
-![Trecho da classe : Pesquisa.java - Buscar por Nome](figuras/brasao.jpg)
+</br>
 
-![Exemplo de busca por relevância - terminal - Menu Produtos ](figuras/brasao.jpg)
+<div style="display: flex; justify-content: center; gap: 20px;">
+  <div style="text-align: center;">
+    <img src="figuras/controladorproduto03.png"  width="700">
+    <em>Figura 3: Trecho da classe : ControladorProduto.java - Buscar por Nome.</em>
+  </div>
+  <div style="text-align: center;">
+    <img src="figuras/buscaproduto04.png"  width="300">
+    <em>Figura 4: Exemplo de busca por relevância - terminal - Menu Produtos.</em>
+  </div>
+</div>
+
+</br>
 
 ### 3.3 É possível buscar produtos por palavras na hora de acrescentá-los às listas dos usuários?
 
 **Sim.** Quando o usuário está gerenciando uma lista específica e escolhe "Acrescentar produto", ele tem a opção "Buscar produtos por nome". Esta tela reutiliza o mesmo motor de busca $\text{TF} \times \text{IDF}$ para encontrar e adicionar o produto desejado, garantindo a ordenação por relevância.
 
-![Exemplo de busca por relevância - terminal - Menu Listas ](figuras/brasao.jpg)
+</br>
+
+<div style="display: flex; justify-content: center; gap: 20px;">
+  <div style="text-align: center;">
+    <img src="figuras/controladorlistaproduto05.png"  width="700">
+    <em>Figura 3: Trecho da classe : ControladorListaProduto.java - Buscar por Nome.</em>
+  </div>
+  <div style="text-align: center;">
+    <img src="figuras/buscaprodutolista06.png"  width="300">
+    <em>Figura 6: Exemplo de busca por relevância - terminal - Menu Listas.</em>
+  </div>
+</div>
+
+</br>
 
 ### 3.4 O trabalho compila corretamente?
 
@@ -106,7 +141,11 @@ Ao cadastrar ou atualizar um produto, seu nome é processado pela classe `Pesqui
 
 **Sim.** O sistema está funcional, incluindo as operações de CRUD dos TPs anteriores e a nova busca por $\text{TF} \times \text{IDF}$. O sistema opera sem erros de execução, mas foi identificado um pequeno erro de cálculo na relevância do índice invertido, que *ocasionalmente* lista um produto irrelevante (com score zero) nos resultados da busca, cuja causa raiz não foi localizada.
 
-![Exemplo de causa de erro ](figuras/brasao.jpg)
+<p align="center">
+  <img src="figuras/exerro07.png"  width="300">
+  <br>
+  <em>Figura 7: Exemplo de causa de erro.</em>
+</p>
 
 ### 3.6 O trabalho é original e não a cópia de um trabalho de outro grupo?
 
@@ -117,6 +156,11 @@ Ao cadastrar ou atualizar um produto, seu nome é processado pela classe `Pesqui
 **Sim.** Como uma melhoria de segurança obrigatória, a resposta da pergunta secreta do usuário, que antes era armazenada em texto simples, agora é armazenada como um **Hash** (utilizando `String.hashCode()`). A verificação durante a reativação da conta agora compara os *hashes* (valores inteiros), e não mais o texto simples, aumentando a segurança dos dados do usuário.
 
 ![Exemplo armazeamento - Hex Editor ](figuras/brasao.jpg)
+<p align="center">
+  <img src="figuras/hash08.png" alt="Busca no Menu Produtos" width="600">
+  <br>
+  <em>Figura 8: Exemplo de armazenamento em hash ( a resposta depois da última pergunta( hash?)) do usuário teste da implementação. Os usuários acima mostram as respostas antes da implementação de armazenamento. </em>
+</p>
 
 
 ## 4. CONCLUSÃO
