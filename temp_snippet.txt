@@ -1,5 +1,0 @@
-                for (int i = inicio; i < fim; i++) {
-                    int numeroExibido = (i - inicio) + 1; // numeração reinicia a cada página
-                    System.out.println("(" + numeroExibido + ") " + produtos.get(i).getNome());
-                }
-
