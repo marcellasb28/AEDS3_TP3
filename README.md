@@ -8,11 +8,11 @@
 
 <br>
 
-# Relatório Trabalho Prático 02
+# Relatório Trabalho Prático 03
 
 ## Algoritmos e Estruturas de Dados III
 
-Este relatório descreve a segunda parte do Trabalho Prático da disciplina de AEDS III.
+Este relatório descreve a terceira parte do Trabalho Prático da disciplina de AEDS III.
 
 <br>
 
@@ -31,25 +31,20 @@ Este relatório descreve a segunda parte do Trabalho Prático da disciplina de A
 
 ### **Resumo**
 
-Este trabalho é a segunda fase de evolução do "PresenteFácil", um sistema de gerenciamento de listas de presentes em Java, desenvolvido para a disciplina de Algoritmos e Estruturas de Dados III.
 
-O foco principal foi implementar um relacionamento N:N  entre as entidades Lista e Produto. Para isso, o sistema agora oferece operações CRUD completas para Produtos e para a nova entidade de associação, ListaProduto.
-
-Para garantir um acesso eficiente aos dados, utilizamos estruturas de indexação externas:
 
 ## Sumário
-1.  [INTRODUÇÃO](#1-introdução)
-2.  [DESENVOLVIMENTO](#2-desenvolvimento)
-    * [Estruturas de Dados e Persistência](#21-estruturas-de-dados-e-persistência)
-3.  [CHECKLIST DE REQUISITOS](#3-checklist-de-requisitos)
-    * [índice invertido](#31-O índice invertido com os termos dos nomes dos produts foi criado usando a classe ListaInvertida?)
-    * [Busca de produtos - Manutenção de Produtos](#32-É possível buscar produtos por palavras no menu de manutenção de produtos?)
-    * [Busca de produtos - Acrescentando- o à lista](#33-É possível buscar produtos por palavras na hora de acrescentá-los às listas dos usuários?)
-    * [Compilação](#34-O trabalho compila corretamente?)
-    * [Sistema completo e funcional](#35-o-trabalho-está-completo-e-funcionando-sem-erros-de-execução)
-    * [Originalidade do trabalho](#36-o-trabalho-é-original-e-não-a-cópia-de-um-trabalho-de-outro-grupo)
-4.  [CONCLUSÃO](#4-conclusão)
-5.  [REFERÊNCIAS](#referências)
+1. [INTRODUÇÃO](#1-introdução)
+2. [DESENVOLVIMENTO](#2-desenvolvimento)
+    * [2.1 Estruturas de Dados e Persistência](#21-estruturas-de-dados-e-persistencia)
+3. [CHECKLIST DE REQUISITOS](#3-checklist-de-requisitos)
+    * [3.1 Índice invertido](#31-indice-invertido)
+    * [3.2 Busca de produtos - Manutenção](#32-busca-de-produtos---manutenção)
+    * [3.3 Busca de produtos - Acrescentando à lista](#33-busca-de-produtos---acrescentando-à-lista)
+    * [3.4 Compilação](#34-compilação)
+    * [3.5 Sistema completo e funcional](#35-sistema-completo-e-funcional)
+    * [3.6 Originalidade do trabalho](#36-originalidade-do-trabalho)
+4. [CONCLUSÃO](#4-conclusão)
+5. [REFERÊNCIAS](#5-referencias)
 
-Árvore B+: Empregada para materializar e otimizar o relacionamento N:N, acelerando consultas cruciais como "quais produtos estão nesta lista?" e "em quais listas este produto aparece?".
 
