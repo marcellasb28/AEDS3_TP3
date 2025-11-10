@@ -68,11 +68,12 @@ O desenvolvimento foi centrado na integração da `ListaInvertida` com o `Contro
 
 <div style="display: flex; justify-content: center; gap: 20px;">
   <div style="text-align: center;">
-    <img src="figuras/listainvertida01.png"  width="700">
+    <img src="figuras/listainvertida01.png"  width="600">
     <em>Figura 1: Trecho da classe : ListaInvertida.java.</em>
   </div>
+   </br>
   <div style="text-align: center;">
-    <img src="figuras/pesquisa02.png"  width="700">
+    <img src="figuras/pesquisa02.png"  width="600">
     <em>Figura 2: Trecho da classe : Pesquisa.java.</em>
   </div>
 </div>
@@ -103,9 +104,10 @@ Ao cadastrar ou atualizar um produto, seu nome é processado pela classe `Pesqui
 
 <div style="display: flex; justify-content: center; gap: 20px;">
   <div style="text-align: center;">
-    <img src="figuras/controladorproduto03.png"  width="700">
+    <img src="figuras/controladorproduto03.png"  width="600">
     <em>Figura 3: Trecho da classe : ControladorProduto.java - Buscar por Nome.</em>
   </div>
+   </br>
   <div style="text-align: center;">
     <img src="figuras/buscaproduto04.png"  width="300">
     <em>Figura 4: Exemplo de busca por relevância - terminal - Menu Produtos.</em>
@@ -120,11 +122,12 @@ Ao cadastrar ou atualizar um produto, seu nome é processado pela classe `Pesqui
 
 </br>
 
-<div style="display: flex; justify-content: center; gap: 20px;">
+<div style="display: flex; justify-content: center;align items:center; gap: 20px;">
   <div style="text-align: center;">
-    <img src="figuras/controladorlistaproduto05.png"  width="700">
+    <img src="figuras/controladorlistaproduto05.png"  width="600">
     <em>Figura 3: Trecho da classe : ControladorListaProduto.java - Buscar por Nome.</em>
   </div>
+   </br>
   <div style="text-align: center;">
     <img src="figuras/buscaprodutolista06.png"  width="300">
     <em>Figura 6: Exemplo de busca por relevância - terminal - Menu Listas.</em>
@@ -155,11 +158,10 @@ Ao cadastrar ou atualizar um produto, seu nome é processado pela classe `Pesqui
 
 **Sim.** Como uma melhoria de segurança obrigatória, a resposta da pergunta secreta do usuário, que antes era armazenada em texto simples, agora é armazenada como um **Hash** (utilizando `String.hashCode()`). A verificação durante a reativação da conta agora compara os *hashes* (valores inteiros), e não mais o texto simples, aumentando a segurança dos dados do usuário.
 
-![Exemplo armazeamento - Hex Editor ](figuras/brasao.jpg)
 <p align="center">
-  <img src="figuras/hash08.png" alt="Busca no Menu Produtos" width="600">
+  <img src="figuras/hash08.png" alt="Busca no Menu Produtos" width="400">
   <br>
-  <em>Figura 8: Exemplo de armazenamento em hash ( a resposta depois da última pergunta( hash?)) do usuário teste da implementação. Os usuários acima mostram as respostas antes da implementação de armazenamento. </em>
+  <em>Figura 8: Exemplo armazeamento - Hex Editor ( a resposta depois da última pergunta( hash?)) do usuário teste da implementação. Os usuários acima mostram as respostas antes da implementação de armazenamento. </em>
 </p>
 
 
