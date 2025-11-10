@@ -1,4 +1,3 @@
-// src/presenteFacil/aeds3/ParCodigoID.java
 package src.presenteFacil.aeds3;
 
 import java.io.*;

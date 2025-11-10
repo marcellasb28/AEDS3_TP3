@@ -2,6 +2,9 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.util.Scanner;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.nio.charset.Charset;
 import src.presenteFacil.controller.ControladorUsuario;
 import src.presenteFacil.view.MenuInicial;
 
@@ -28,10 +31,8 @@ public class Main {
      * @param args argumentos de linha de comando (não utilizados)
      */
     public static void main(String[] args) {
-        
-        // Ajusta Entrada/Saída para a codificação real do console (Windows/Unix)
+        // Ajusta E/S para a codificação real do console (Windows/Unix)
         Charset consoleCs = null;
-        
         try {
             if (System.console() != null) {
                 consoleCs = System.console().charset();

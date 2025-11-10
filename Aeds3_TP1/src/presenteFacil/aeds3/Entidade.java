@@ -1,6 +1,5 @@
 package src.presenteFacil.aeds3;
 
-
 public interface Entidade {
 
     public int getID();

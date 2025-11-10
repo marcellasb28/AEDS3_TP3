@@ -21,7 +21,7 @@ public class ControladorUsuario {
     }
 
     public void criarNovoUsuario(Scanner scanner) {
-        System.out.println("-------- PresenteFácil 2.0 --------");
+        System.out.println("-------- PresenteFácil 1.0 --------");
         System.out.println("-----------------------------------");
         System.out.println("\n---------- Novo Usuário -----------");
         try {
@@ -53,7 +53,7 @@ public class ControladorUsuario {
     }
 
     public Usuario loginUsuario(Scanner scanner) {
-        System.out.println("-------- PresenteFácil 2.0 --------");
+        System.out.println("-------- PresenteFácil 1.0 --------");
         System.out.println("-----------------------------------");
         System.out.println("\n------------- Login ---------------");
         try {
@@ -89,7 +89,7 @@ public class ControladorUsuario {
             System.out.println("\n-- Nao ha usuario logado para desativar. --\n");
             return false;
         }
-        System.out.println("-------- PresenteFácil 2.0 --------");
+        System.out.println("-------- PresenteFácil 1.0 --------");
         System.out.println("-----------------------------------");
         System.out.println("\n------ Desativar Minha Conta ------");
         System.out.print("Tem certeza que deseja desativar sua conta? (S/N): ");
@@ -137,7 +137,7 @@ public class ControladorUsuario {
     }
 
     public void reativarUsuario(Scanner scanner) throws Exception {
-        System.out.println("-------- PresenteFácil 2.0 --------");
+        System.out.println("-------- PresenteFácil 1.0 --------");
         System.out.println("-----------------------------------");
         System.out.println("\n--------- Reativar Usuario --------");
         System.out.print("\nE-mail: ");
@@ -164,7 +164,7 @@ public class ControladorUsuario {
 
     // Meus dados + edição
     public void exibirDadosDoUsuarioLogado() {
-        System.out.println("-------- PresenteFácil 2.0 --------");
+        System.out.println("-------- PresenteFácil 1.0 --------");
         System.out.println("-----------------------------------");
         System.out.println("> Início > Meus Dados\n");
         if (this.usuarioLogado != null) {
@@ -181,15 +181,15 @@ public class ControladorUsuario {
         }
         boolean sair = false;
         while (!sair) {
-            System.out.println("-------- PresenteFácil 2.0 --------");
+            System.out.println("-------- PresenteFácil 1.0 --------");
             System.out.println("-----------------------------------");
             System.out.println("> Início > Meus Dados\n");
             System.out.println(this.usuarioLogado.toString());
             System.out.println("(1) Alterar meus dados");
             System.out.println("(R) Retornar");
-            System.out.print("\nOpção: ");
-
+            System.out.print("\nOpcao: ");
             String op = scanner.nextLine().trim().toUpperCase();
+
             ClearConsole.clearScreen();
 
             switch (op) {
@@ -200,7 +200,7 @@ public class ControladorUsuario {
                     sair = true;
                     break;
                 default:
-                    System.out.println("\n-- Opção inválida. --\n");
+                    System.out.println("\n-- Opcao invalida. --\n");
             }
         }
     }
@@ -218,9 +218,9 @@ public class ControladorUsuario {
             System.out.println("(4) Pergunta Secreta");
             System.out.println("(5) Resposta Secreta");
             System.out.println("(R) Retornar");
-            System.out.print("\nOpção: ");
-
+            System.out.print("\nOpcao: ");
             String op = scanner.nextLine().trim().toUpperCase();
+
             ClearConsole.clearScreen();
 
             try {

@@ -3,7 +3,6 @@ package src.presenteFacil.model;
 import java.io.*;
 
 public class ListaProduto implements Registro{
-    
     private int id;
     private int idLista; //Chave Estrangeira
     private int idProduto; //Chave Estrangeira
